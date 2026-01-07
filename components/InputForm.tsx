@@ -94,7 +94,7 @@ export function InputForm({ onGenerate, isGenerating = false }: InputFormProps) 
       maxDepth,
       maxNodes,
       text: inputMode === 'text' ? text : undefined,
-      pdfFile: inputMode === 'pdf' ? pdfFile : undefined,
+      pdfFile: inputMode === 'pdf' && pdfFile ? pdfFile : undefined,
     });
   };
 
