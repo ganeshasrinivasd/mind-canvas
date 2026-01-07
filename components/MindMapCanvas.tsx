@@ -38,7 +38,7 @@ export function MindMapCanvas() {
     toggleCollapsed,
   } = useMapStore();
 
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<any>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   // Convert document to React Flow nodes and edges
