@@ -169,7 +169,7 @@ export const MindNode = memo(({ data }: NodeProps<any>) => {
           }}
         >
           <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '13px' }}>
-            {data.bullets!.map((bullet, index) => (
+            {data.bullets!.map((bullet: string, index: number) => (
               <li
                 key={index}
                 style={{
