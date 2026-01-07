@@ -25,7 +25,7 @@ import { MindNode, MindNodeData } from './MindNode';
 import type { SemanticNode } from '@/types/mindmap';
 
 // Custom node types
-const nodeTypes = {
+const nodeTypes: any = {
   mindNode: MindNode,
 };
 
