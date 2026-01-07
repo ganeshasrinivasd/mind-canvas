@@ -48,7 +48,7 @@ export function MindMapCanvas() {
     }
 
     const { semantic, view } = document;
-    const flowNodes: Node<MindNodeData>[] = [];
+    const flowNodes: Node<any>[] = [];
     const flowEdges: Edge[] = [];
 
     // Create nodes
