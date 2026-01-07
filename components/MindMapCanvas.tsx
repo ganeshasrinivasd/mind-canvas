@@ -193,16 +193,7 @@ export function MindMapCanvas() {
         proOptions={{ hideAttribution: true }}
       >
         <Background variant={BackgroundVariant.Dots} gap={20} size={1.5} color="rgba(196, 167, 125, 0.15)" />
-        <Controls
-          showInteractive={false}
-          style={{
-            button: {
-              backgroundColor: 'rgba(15, 23, 42, 0.9)',
-              borderColor: 'rgba(196, 167, 125, 0.3)',
-              color: 'rgba(255, 255, 255, 0.7)',
-            },
-          }}
-        />
+        <Controls showInteractive={false} />
 
         {/* Info panel */}
         <Panel position="top-left" style={{ margin: 10 }}>
