@@ -39,7 +39,7 @@ export function MindMapCanvas() {
   } = useMapStore();
 
   const [nodes, setNodes, onNodesChange] = useNodesState<any>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<any>([]);
 
   // Convert document to React Flow nodes and edges
   const { flowNodes, flowEdges } = useMemo(() => {
