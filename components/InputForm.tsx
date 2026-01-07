@@ -406,10 +406,10 @@ export function InputForm({ onGenerate, isGenerating = false }: InputFormProps) 
                         <div className="text-6xl">📄</div>
                         <div>
                           <div className="font-bold text-lg text-white mb-2">
-                            {pdfFile.name}
+                            {pdfFile?.name}
                           </div>
                           <div className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-                            {(pdfFile.size / 1024 / 1024).toFixed(2)} MB
+                            {pdfFile?.size ? (pdfFile.size / 1024 / 1024).toFixed(2) : '0.00'} MB
                           </div>
                         </div>
                         <button
