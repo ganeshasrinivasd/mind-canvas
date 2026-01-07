@@ -409,7 +409,7 @@ export function InputForm({ onGenerate, isGenerating = false }: InputFormProps) 
                             {pdfFile?.name}
                           </div>
                           <div className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-                            {pdfFile?.size ? (pdfFile.size / 1024 / 1024).toFixed(2) : '0.00'} MB
+                            {pdfFile?.size ? (pdfFile?.size / 1024 / 1024).toFixed(2) : '0.00'} MB
                           </div>
                         </div>
                         <button
