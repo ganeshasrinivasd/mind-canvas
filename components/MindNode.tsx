@@ -56,7 +56,7 @@ const NODE_STYLES = {
   },
 };
 
-export const MindNode = memo(({ data }: NodeProps<MindNodeData>) => {
+export const MindNode = memo(({ data }: NodeProps<any>) => {
   const style = NODE_STYLES[data.kind];
   const hasChildren = data.children && data.children.length > 0;
   const hasBullets = data.bullets && data.bullets.length > 0;
