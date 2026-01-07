@@ -353,8 +353,8 @@ export function LandingHero() {
           </div>
 
           {/* Right: Developer Info */}
-          <div className="flex items-center gap-6">
-            <span className="label-text" style={{
+          <div className="flex items-center gap-3 md:gap-6">
+            <span className="hidden md:block label-text" style={{
               fontSize: '11px',
               color: 'rgba(255, 255, 255, 0.5)',
             }}>
@@ -366,7 +366,7 @@ export function LandingHero() {
                 fontWeight: 600,
               }}>GANESHA</span>
             </span>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 md:gap-4">
               {/* Portfolio */}
               <a
                 href="https://gdamaraju.com"
@@ -461,13 +461,6 @@ export function LandingHero() {
             Start Building
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M8 3L13 8L8 13M13 8H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-
-          <button onClick={openDemo} className="btn-secondary">
-            View Demo
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M8 3V13M8 13L13 8M8 13L3 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
         </div>
