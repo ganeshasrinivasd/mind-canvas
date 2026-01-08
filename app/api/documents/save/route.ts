@@ -1,29 +1,28 @@
 // app/api/documents/save/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerSupabaseClient } from '@/lib/db/supabase/client';
+import { getSession } from '@/lib/auth/session';
+import { SaveDocumentSchema, validateRequest } from '@/lib/validation/schemas';
 import type { MindMapDocument, ViewState } from '@/types/mindmap';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
-    const { document, viewState } = await request.json() as {
-      document: MindMapDocument;
-      viewState: ViewState;
-    };
+    // Require authentication for save functionality
+    const { user, supabase } = await getSession();
 
-    if (!document || !document.id) {
+    const body = await request.json();
+
+    // Validate request body
+    const validation = validateRequest(SaveDocumentSchema, body);
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'Invalid document data' },
+        { error: validation.error },
         { status: 400 }
       );
     }
 
-    const supabase = createServerSupabaseClient();
-
-    // For now, we'll work without authentication
-    // TODO: Get user from session when auth is implemented
-    const userId = null;
+    const { document, viewState } = validation.data;
 
     // Check if document already exists
     const { data: existingDoc } = await supabase
@@ -64,7 +63,7 @@ export async function POST(request: NextRequest) {
         .from('documents')
         .insert({
           id: document.id,
-          user_id: userId,
+          user_id: user.id,
           title: document.meta.title,
           source_type: document.meta.sourceType,
           style_preset: document.meta.stylePreset,
@@ -116,6 +115,20 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error saving document:', error);
+
+    // Handle authentication errors
+    if (error instanceof Error && error.message === 'Unauthorized') {
+      return NextResponse.json(
+        {
+          error: {
+            code: 'AUTHENTICATION_REQUIRED',
+            message: 'Sign in to save your work'
+          }
+        },
+        { status: 401 }
+      );
+    }
+
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to save document' },
       { status: 500 }

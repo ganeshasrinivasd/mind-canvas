@@ -3,15 +3,34 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useAuth } from '@/lib/auth/AuthContext';
+import AuthModal from './AuthModal';
 
 export function LandingHero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(true); // Always start with true for SSR
   const [constellationFade, setConstellationFade] = useState(false);
   const [showBrandText, setShowBrandText] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
+  const { user, signOut } = useAuth();
+
+  // Check sessionStorage after mounting (client-side only)
+  useEffect(() => {
+    const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
+    if (hasSeenIntro) {
+      setShowIntro(false); // Skip intro if already seen
+    }
+  }, []);
 
   useEffect(() => {
+    // If intro is skipped, don't set timers
+    if (!showIntro) return;
+
+    // Mark intro as seen in this session
+    sessionStorage.setItem('hasSeenIntro', 'true');
+
     // After 2.5 seconds, fade the constellation
     const constellationFadeTimer = setTimeout(() => {
       setConstellationFade(true);
@@ -261,8 +280,22 @@ export function LandingHero() {
             <p className="label-text" style={{
               fontSize: '12px',
               color: 'rgba(255, 255, 255, 0.6)',
+              marginBottom: '8px',
             }}>
               NEURAL INTELLIGENCE PLATFORM
+            </p>
+            <p className="label-text" style={{
+              fontSize: '11px',
+              color: 'rgba(255, 255, 255, 0.4)',
+              letterSpacing: '0.08em',
+            }}>
+              DEVELOPED BY <span style={{
+                background: 'linear-gradient(135deg, var(--accent-bronze-start), var(--accent-bronze-end))',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                fontWeight: 600,
+              }}>GANESHA</span>
             </p>
           </div>
         </div>
@@ -352,20 +385,60 @@ export function LandingHero() {
             </h1>
           </div>
 
-          {/* Right: Developer Info */}
+          {/* Right: Auth & Developer Info */}
           <div className="flex items-center gap-3 md:gap-6">
-            <span className="hidden md:block label-text" style={{
-              fontSize: '11px',
-              color: 'rgba(255, 255, 255, 0.5)',
-            }}>
-              DEVELOPED BY <span style={{
-                background: 'linear-gradient(135deg, var(--accent-bronze-start), var(--accent-bronze-end))',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                fontWeight: 600,
-              }}>GANESHA</span>
-            </span>
+            {/* Auth Buttons */}
+            {user ? (
+              <div className="flex items-center gap-3">
+                <span className="hidden sm:block text-sm text-gray-400">
+                  {user.email}
+                </span>
+                <button
+                  onClick={() => signOut()}
+                  className="px-4 py-2 text-sm font-medium text-white rounded-lg transition-all hover:bg-white/10"
+                  style={{
+                    border: '1px solid rgba(196, 167, 125, 0.3)',
+                  }}
+                >
+                  Sign out
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    setAuthMode('signin');
+                    setAuthModalOpen(true);
+                  }}
+                  className="px-4 py-2 text-sm font-medium text-white rounded-lg transition-all hover:bg-white/10"
+                  style={{
+                    border: '1px solid rgba(196, 167, 125, 0.3)',
+                  }}
+                >
+                  Sign in
+                </button>
+                <button
+                  onClick={() => {
+                    setAuthMode('signup');
+                    setAuthModalOpen(true);
+                  }}
+                  className="px-4 py-2 text-sm font-medium text-white rounded-lg transition-all"
+                  style={{
+                    backgroundImage: 'linear-gradient(135deg, rgba(196, 167, 125, 0.8) 0%, rgba(160, 139, 111, 0.8) 50%, rgba(139, 115, 85, 0.8) 100%)',
+                    boxShadow: '0 2px 8px rgba(196, 167, 125, 0.3)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(196, 167, 125, 0.5)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(196, 167, 125, 0.3)';
+                  }}
+                >
+                  Sign up
+                </button>
+              </div>
+            )}
+
             <div className="flex items-center gap-3 md:gap-4">
               {/* Portfolio */}
               <a
@@ -568,6 +641,14 @@ export function LandingHero() {
         </div>
       </div>
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        mode={authMode}
+        onToggleMode={() => setAuthMode(authMode === 'signin' ? 'signup' : 'signin')}
+      />
     </>
   );
 }

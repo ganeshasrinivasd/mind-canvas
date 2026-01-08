@@ -21,7 +21,7 @@ export async function generateSemanticMap(params: {
     // Call Claude API
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
-      max_tokens: 4096,
+      max_tokens: 8192, // Increased to handle larger mind maps
       messages: [
         {
           role: 'user',
@@ -42,6 +42,10 @@ export async function generateSemanticMap(params: {
     return semanticMap;
   } catch (error) {
     console.error('Error generating semantic map:', error);
+    // Preserve the original error message for better debugging
+    if (error instanceof Error) {
+      throw new Error(`Failed to generate mind map: ${error.message}`);
+    }
     throw new Error('Failed to generate mind map. Please try again.');
   }
 }

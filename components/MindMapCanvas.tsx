@@ -57,6 +57,11 @@ export function MindMapCanvas() {
 
       if (!nodeView) return;
 
+      // Safety check: ensure pos exists and is valid
+      const position = nodeView.pos && typeof nodeView.pos === 'object' && 'x' in nodeView.pos && 'y' in nodeView.pos
+        ? nodeView.pos
+        : { x: 0, y: 0 };
+
       const nodeData: MindNodeData = {
         ...semanticNode,
         collapsed: nodeView.collapsed,
@@ -67,7 +72,7 @@ export function MindMapCanvas() {
       flowNodes.push({
         id: semanticNode.id,
         type: 'mindNode',
-        position: nodeView.pos,
+        position: position,
         data: nodeData,
         draggable: true,
       });
