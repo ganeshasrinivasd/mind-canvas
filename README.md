@@ -439,3 +439,5 @@ MIT License - see [LICENSE](LICENSE)
 **[Ganesha Damaraju](https://gdamaraju.com)**
 
 GitHub: [@ganeshasrinivasd](https://github.com/ganeshasrinivasd)
+
+Built with AI assistance for full-stack components outside my core AI/ML expertise.
