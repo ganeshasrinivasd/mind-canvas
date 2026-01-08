@@ -436,8 +436,6 @@ MIT License - see [LICENSE](LICENSE)
 
 ## Built By
 
-**[Ganesha Damaraju](https://gdamaraju.com)** - Full-stack engineer
-
-Co-developed with Claude Sonnet 4.5 (Anthropic)
+**[Ganesha Damaraju](https://gdamaraju.com)**
 
 GitHub: [@ganeshasrinivasd](https://github.com/ganeshasrinivasd)
