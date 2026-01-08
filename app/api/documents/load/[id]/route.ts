@@ -4,6 +4,8 @@ import { createServerSupabaseClient } from '@/lib/db/supabase/client';
 import { initializeViewState } from '@/lib/layout/initializeViewState';
 import type { MindMapDocument } from '@/types/mindmap';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }

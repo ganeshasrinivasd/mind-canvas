@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/db/supabase/client';
 import type { MindMapDocument, ViewState } from '@/types/mindmap';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
     const { document, viewState } = await request.json() as {
