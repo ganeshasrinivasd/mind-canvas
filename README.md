@@ -50,12 +50,23 @@ Oh, you mean paste your 50-page research paper into ChatGPT and ask it to "summa
 
 MindCanvas gives you **structure**, not a summary. You see the whole network at once. You navigate it like a map. You verify every claim against the source. It's not a chatbot. It's a thinking tool.
 
+## Features
+
+- **AI-Powered Generation**: Claude Sonnet 4.5 extracts concepts and creates hierarchical structures
+- **Multiple Input Types**: Topics, plain text, or PDF documents
+- **5 Visual Styles**: Professional, Creative, Technical, Educational, Minimalist
+- **Interactive Canvas**: Pan, zoom, collapse nodes, and explore your ideas
+- **Save & Load**: Persistent storage with Supabase - your mind maps don't disappear
+- **Document Library**: Manage multiple mind maps, restore exact view state (zoom, positions)
+- **Inspector Panel**: Detailed view of any concept with bullets and metadata
+
 ## Tech Stack
 
 - Next.js 16
 - TypeScript
 - React Flow (interactive canvas)
-- Claude API (semantic analysis)
+- Claude Sonnet 4.5 (semantic analysis)
+- Supabase (PostgreSQL storage)
 - Zustand (state management)
 - pdf-parse (PDF text extraction)
 
@@ -63,13 +74,21 @@ MindCanvas gives you **structure**, not a summary. You see the whole network at 
 
 ```bash
 npm install
-echo "ANTHROPIC_API_KEY=your_api_key" > .env.local
+
+# Create .env.local with:
+# ANTHROPIC_API_KEY=sk-ant-...
+# NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+# NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+# SUPABASE_SERVICE_ROLE_KEY=eyJ...
+
 npm run dev
 ```
 
+See `supabase_schema.sql` for database setup.
+
 ## Deployment
 
-Works on Vercel out of the box. Set `ANTHROPIC_API_KEY` in environment variables.
+Works on Vercel out of the box. Set environment variables in Vercel dashboard.
 
 ## Built By
 

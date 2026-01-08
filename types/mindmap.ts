@@ -48,6 +48,8 @@ export type EvidenceRef = {
   page?: number;
   quote: string;                 // ≤200 chars
   locator?: string;              // "Section 2.1", "Paragraph 3"
+  charStart?: number;            // Character offset in source text
+  charEnd?: number;              // Character offset in source text
 };
 
 export type ViewState = {

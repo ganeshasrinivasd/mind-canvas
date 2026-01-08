@@ -463,6 +463,27 @@ export function LandingHero() {
               <path d="M8 3L13 8L8 13M13 8H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
+          <a
+            href="/documents"
+            className="px-6 py-3 text-sm font-medium text-white rounded-lg transition-all flex items-center gap-2"
+            style={{
+              backgroundImage: 'linear-gradient(135deg, rgba(196, 167, 125, 0.8) 0%, rgba(160, 139, 111, 0.8) 50%, rgba(139, 115, 85, 0.8) 100%)',
+              boxShadow: '0 4px 12px rgba(196, 167, 125, 0.3)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(196, 167, 125, 0.5)';
+              e.currentTarget.style.transform = 'scale(1.02)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(196, 167, 125, 0.3)';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M2 3h12M2 8h12M2 13h12" strokeLinecap="round"/>
+            </svg>
+            View Library
+          </a>
         </div>
 
         {/* Value Highlights */}

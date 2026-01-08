@@ -1,6 +1,6 @@
 // lib/demo/generateMockMap.ts
 
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 import type { MindMapDocument, SemanticMap, StylePreset } from '@/types/mindmap';
 import { initializeViewState } from '@/lib/layout/initializeViewState';
 
@@ -23,7 +23,7 @@ export function generateMockMap(params: {
   const view = initializeViewState(semantic);
 
   const document: MindMapDocument = {
-    id: uuidv4(),
+    id: randomUUID(),
     version: '1.0',
     meta: {
       title,

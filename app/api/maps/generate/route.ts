@@ -1,7 +1,7 @@
 // app/api/maps/generate/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 import { generateSemanticMap } from '@/lib/ai/generateSemanticMap';
 import { initializeViewState } from '@/lib/layout/initializeViewState';
 import { extractTextFromPDFBuffer } from '@/lib/pdf/extract';
@@ -90,8 +90,9 @@ export async function POST(request: NextRequest) {
     const view = initializeViewState(semantic);
 
     // Create the complete document
+    const sourceId = randomUUID();
     const document: MindMapDocument = {
-      id: uuidv4(),
+      id: randomUUID(),
       version: '1.0',
       meta: {
         title,
@@ -107,19 +108,19 @@ export async function POST(request: NextRequest) {
       sources: [
         sourceType === 'topic'
           ? {
-              sourceId: uuidv4(),
+              sourceId,
               type: 'topic' as const,
               query: title,
             }
           : sourceType === 'text'
           ? {
-              sourceId: uuidv4(),
+              sourceId,
               type: 'text' as const,
               name: title,
               charCount: text?.length || 0,
             }
           : {
-              sourceId: uuidv4(),
+              sourceId,
               type: 'pdf' as const,
               fileName: title,
               storageUrl: '',

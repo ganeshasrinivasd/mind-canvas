@@ -9,7 +9,7 @@ import { useMapStore } from '@/store/mapStore';
 export default function EditorPage() {
   const params = useParams();
   const router = useRouter();
-  const { document, isDirty } = useMapStore();
+  const { document, isDirty, saveDocument, isSaving } = useMapStore();
 
   useEffect(() => {
     // If no document in store, redirect to home
@@ -17,6 +17,16 @@ export default function EditorPage() {
       router.push('/');
     }
   }, [document, router]);
+
+  const handleSave = async () => {
+    try {
+      await saveDocument();
+      alert('Document saved successfully!');
+    } catch (error) {
+      console.error('Failed to save:', error);
+      alert('Failed to save document');
+    }
+  };
 
   if (!document) {
     return (
@@ -56,9 +66,28 @@ export default function EditorPage() {
               {isDirty && ' • Unsaved changes'}
             </p>
           </div>
+          <button
+            onClick={() => router.push('/documents')}
+            className="ml-4 px-3 py-1.5 text-xs font-medium transition-colors rounded-lg"
+            style={{
+              color: 'rgba(255, 255, 255, 0.7)',
+              border: '1px solid rgba(196, 167, 125, 0.2)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = '#C4A77D';
+              e.currentTarget.style.borderColor = 'rgba(196, 167, 125, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
+              e.currentTarget.style.borderColor = 'rgba(196, 167, 125, 0.2)';
+            }}
+          >
+            My Library
+          </button>
         </div>
 
         <div className="flex items-center gap-3">
+          {/* Query and Insights features removed for simplicity */}
           <button
             className="px-4 py-2 text-sm font-medium transition-colors rounded-lg"
             style={{
@@ -77,21 +106,27 @@ export default function EditorPage() {
             Export
           </button>
           <button
+            onClick={handleSave}
+            disabled={isSaving}
             className="px-4 py-2 text-sm font-medium text-white rounded-lg transition-all"
             style={{
               backgroundImage: 'linear-gradient(135deg, #C4A77D 0%, #A08B6F 50%, #8B7355 100%)',
               boxShadow: '0 4px 12px rgba(196, 167, 125, 0.4)',
+              opacity: isSaving ? 0.6 : 1,
+              cursor: isSaving ? 'not-allowed' : 'pointer',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 16px rgba(196, 167, 125, 0.6)';
-              e.currentTarget.style.transform = 'scale(1.02)';
+              if (!isSaving) {
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(196, 167, 125, 0.6)';
+                e.currentTarget.style.transform = 'scale(1.02)';
+              }
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.boxShadow = '0 4px 12px rgba(196, 167, 125, 0.4)';
               e.currentTarget.style.transform = 'scale(1)';
             }}
           >
-            Save
+            {isSaving ? 'Saving...' : 'Save'}
           </button>
         </div>
       </div>
